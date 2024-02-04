@@ -13,9 +13,13 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.CONFLICT).body(exception.getMessage());
     }
 
+    @ExceptionHandler({CustomerNotFoundException.class})
+    public ResponseEntity<String> handlerCustomerNotFound(CustomerNotFoundException exception){
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(exception.getMessage());
+    }
+
     @ExceptionHandler({CustomerCpfConflictException.class})
     public ResponseEntity<String> handlerCustomerCpfConflict(CustomerCpfConflictException exception){
         return ResponseEntity.status(HttpStatus.CONFLICT).body(exception.getMessage());
     }
-
 }
