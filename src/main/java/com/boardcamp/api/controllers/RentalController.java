@@ -9,11 +9,14 @@ import com.boardcamp.api.services.RentalService;
 import jakarta.validation.Valid;
 
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import java.util.List;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-
+import org.springframework.web.bind.annotation.GetMapping;
 
 
 @RestController
@@ -25,6 +28,13 @@ public class RentalController {
     public RentalController(RentalService rentalService){
         this.rentalService = rentalService;
     }
+
+    @GetMapping("/rentals")
+    public ResponseEntity<List<RentalModel>> getAllRentals() {
+        List<RentalModel> rentals = rentalService.findAll();
+        return ResponseEntity.status(HttpStatus.OK).body(rentals);
+    }
+    
 
     @PostMapping("/rentals")
     public ResponseEntity<RentalModel> createNewRentail (@RequestBody @Valid RentalDto body) {

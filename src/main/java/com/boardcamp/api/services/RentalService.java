@@ -1,5 +1,7 @@
 package com.boardcamp.api.services;
 
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 
 import com.boardcamp.api.dtos.RentalDto;
@@ -26,6 +28,10 @@ public class RentalService {
         this.customerRepository = customerRepository;
         this.gameRepository = gameRepository;        
         this.rentalRepository = rentalRepository;
+    }
+
+    public List<RentalModel> findAll(){
+        return rentalRepository.findAll();
     }
 
     @SuppressWarnings("null")
