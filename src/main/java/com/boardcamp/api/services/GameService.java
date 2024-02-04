@@ -5,7 +5,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import com.boardcamp.api.dtos.GameDto;
-import com.boardcamp.api.exceptions.GameNameConflictException;
+import com.boardcamp.api.exceptions.game_errors.GameNameConflictException;
 import com.boardcamp.api.models.GameModel;
 import com.boardcamp.api.repositories.GameRepository;
 

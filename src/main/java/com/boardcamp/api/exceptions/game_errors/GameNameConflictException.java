@@ -1,4 +1,4 @@
-package com.boardcamp.api.exceptions;
+package com.boardcamp.api.exceptions.game_errors;
 
 public class GameNameConflictException extends RuntimeException {
     

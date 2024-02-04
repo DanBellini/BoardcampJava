@@ -1,13 +1,17 @@
 package com.boardcamp.api.services;
 
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
 
 import com.boardcamp.api.dtos.RentalDto;
-import com.boardcamp.api.exceptions.CustomerNotFoundException;
-import com.boardcamp.api.exceptions.GameNotFoundException;
-import com.boardcamp.api.exceptions.RentalNotAvailableStockException;
+import com.boardcamp.api.exceptions.customer_errors.CustomerNotFoundException;
+import com.boardcamp.api.exceptions.game_errors.GameNotFoundException;
+import com.boardcamp.api.exceptions.rental_errors.RentalAlreadyReturnedException;
+import com.boardcamp.api.exceptions.rental_errors.RentalNotAvailableStockException;
+import com.boardcamp.api.exceptions.rental_errors.RentalNotFoundException;
 import com.boardcamp.api.models.CustomerModel;
 import com.boardcamp.api.models.GameModel;
 import com.boardcamp.api.models.RentalModel;
@@ -56,5 +60,38 @@ public class RentalService {
 
         RentalModel rental = new RentalModel(dto, customer, game, originalPrice);
         return rentalRepository.save(rental);
+    }
+
+    private int calculateDelayFee (LocalDate rentDate, int daysRented, int pricePerDay){
+
+        LocalDate currentDate = LocalDate.now();
+
+        Long periodRental = ChronoUnit.DAYS.between(rentDate, currentDate); 
+        int delayFee = 0;
+
+        if(periodRental <= daysRented){
+            return delayFee;
+        } else{
+            int delayOfDays = (int) (periodRental - daysRented);
+            delayFee = delayOfDays * pricePerDay;
+            return delayFee;  
+        }
+    }
+
+    @SuppressWarnings("null")
+    public RentalModel update (Long id){
+        RentalModel rental = rentalRepository.findById(id).orElseThrow(
+            () -> new RentalNotFoundException("Rental not found by this gameId!")
+        );
+
+        if(rental.getReturnDate() != null){
+            throw new RentalAlreadyReturnedException("This rent has already been refunded");
+        }
+
+        int delayFee = calculateDelayFee(rental.getRentDate(),rental.getDaysRented(), rental.getOriginalPrice());
+
+        RentalModel newRental = new RentalModel(rental, delayFee);
+        newRental.setId(id);
+        return rentalRepository.save(newRental);
     }
 }

@@ -35,6 +35,16 @@ public class RentalModel {
         this.returnDate = null;
         this.delayFee = 0;
     }
+
+    public RentalModel (RentalModel rental, int delayFee){
+        this.customer = rental.getCustomer();
+        this.game = rental.getGame();
+        this.daysRented = rental.getDaysRented();
+        this.originalPrice = rental.getOriginalPrice();
+        this.rentDate = rental.getRentDate();
+        this.returnDate = LocalDate.now();
+        this.delayFee = delayFee;
+    }
     
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

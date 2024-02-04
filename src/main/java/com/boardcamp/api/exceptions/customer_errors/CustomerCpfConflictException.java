@@ -1,4 +1,4 @@
-package com.boardcamp.api.exceptions;
+package com.boardcamp.api.exceptions.customer_errors;
 
 public class CustomerCpfConflictException extends RuntimeException{
     

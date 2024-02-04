@@ -3,8 +3,8 @@ package com.boardcamp.api.services;
 import org.springframework.stereotype.Service;
 
 import com.boardcamp.api.dtos.CustomerDto;
-import com.boardcamp.api.exceptions.CustomerCpfConflictException;
-import com.boardcamp.api.exceptions.CustomerNotFoundException;
+import com.boardcamp.api.exceptions.customer_errors.CustomerCpfConflictException;
+import com.boardcamp.api.exceptions.customer_errors.CustomerNotFoundException;
 import com.boardcamp.api.models.CustomerModel;
 import com.boardcamp.api.repositories.CustomerRepository;
 
