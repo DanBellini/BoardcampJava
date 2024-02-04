@@ -16,6 +16,7 @@ public class CustomerService {
         this.customerRepository = customerRepository;
     }
 
+    @SuppressWarnings("null")
     public CustomerModel findById(Long id){
         return customerRepository.findById(id).orElseThrow(
             () -> new CustomerNotFoundException("Customer not found by this id!"));
