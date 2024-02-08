@@ -40,7 +40,6 @@ public class RentalService {
 
     @SuppressWarnings("null")
     public RentalModel save (RentalDto dto){
-
         CustomerModel customer = customerRepository.findById(dto.getCustomerId()).orElseThrow(
             ()-> new CustomerNotFoundException("Customer not found by this CustomerId!")
         );
@@ -63,18 +62,13 @@ public class RentalService {
     }
 
     private int calculateDelayFee (LocalDate rentDate, int daysRented, int pricePerDay){
-
         LocalDate currentDate = LocalDate.now();
-
         Long periodRental = ChronoUnit.DAYS.between(rentDate, currentDate); 
-        int delayFee = 0;
 
         if(periodRental <= daysRented){
-            return delayFee;
+            return 0;
         } else{
-            int delayOfDays = (int) (periodRental - daysRented);
-            delayFee = delayOfDays * pricePerDay;
-            return delayFee;  
+            return (int) ((periodRental - daysRented) * pricePerDay);  
         }
     }
 
@@ -90,8 +84,7 @@ public class RentalService {
 
         int delayFee = calculateDelayFee(rental.getRentDate(),rental.getDaysRented(), rental.getOriginalPrice());
 
-        RentalModel newRental = new RentalModel(rental, delayFee);
-        newRental.setId(id);
-        return rentalRepository.save(newRental);
+        rental.setDelayFee(delayFee);
+        return rentalRepository.save(rental);
     }
 }
