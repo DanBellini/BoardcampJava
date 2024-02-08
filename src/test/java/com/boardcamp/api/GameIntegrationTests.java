@@ -71,7 +71,7 @@ class GameIntegrationTests {
 			HttpMethod.GET,
 			null,
 			new ParameterizedTypeReference<List<GameModel>>() {}
-		);		 
+			);		 
 		
 		//then
 		List<GameModel> games = response.getBody();
@@ -96,7 +96,8 @@ class GameIntegrationTests {
 			GAME_ENDPOINT, 
 			HttpMethod.POST,
 			body,
-			GameModel.class);
+			GameModel.class
+			);
 
 		//then
 		assertEquals(HttpStatus.CREATED, response.getStatusCode());
@@ -106,11 +107,11 @@ class GameIntegrationTests {
 	@Test
 	void givenRepeatedGame_whenCreatingGame_thenThrowsErrorConflict(){
 		//given
-
 		createAndSaveGame("xadrez", "image2.test", 2, 1200);
 
 		GameDto game = new GameDto("xadrez", "image.test", 1, 1000);
 		HttpEntity<GameDto> body = new HttpEntity<>(game);
+		
 		//when
 		ResponseEntity<String> response = restTemplate.exchange(
 			GAME_ENDPOINT,
