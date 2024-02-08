@@ -40,7 +40,7 @@ class GameIntegrationTests {
 
 	@SuppressWarnings("null")
 	@Test
-	void givenRepositoryIsEmpty_whenGetRequestFindAll_thenReturnArrayEmpty() {
+	void givenRepositoryIsEmpty_whenGetRequestFindAllGames_thenReturnArrayEmpty() {
 		//given
 
 		//when
@@ -59,7 +59,7 @@ class GameIntegrationTests {
 
 	@SuppressWarnings("null")
 	@Test
-	void givenRepositoryIsNotEmpty_whenGetRequestFindAll_thenReturnArrayGameModel(){
+	void givenRepositoryIsNotEmpty_whenGetRequestFindAllGames_thenReturnArrayGameModel(){
 		//given
 		GameModel game1 = createAndSaveGame("xadrez", "image.com", 3, 1000);
 		GameModel game2 = createAndSaveGame("Dama", "image2.com", 5, 600);
@@ -76,7 +76,7 @@ class GameIntegrationTests {
 		//then
 		List<GameModel> games = response.getBody();
 
-		assertEquals(3, response.getBody().size());
+		assertEquals(3, games.size());
 		assertEquals(HttpStatus.OK, response.getStatusCode());
 		assertEquals(3, gameRepository.count());
 
