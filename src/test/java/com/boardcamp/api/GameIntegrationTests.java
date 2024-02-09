@@ -36,8 +36,6 @@ class GameIntegrationTests {
 		gameRepository.deleteAll();
 	}
 
-	private final String GAME_ENDPOINT = "/games";
-
 	@SuppressWarnings("null")
 	@Test
 	void givenRepositoryIsEmpty_whenGetRequestFindAllGames_thenReturnArrayEmpty() {
@@ -45,7 +43,7 @@ class GameIntegrationTests {
 
 		//when
 		ResponseEntity<List<GameModel>> response = restTemplate.exchange(
-			GAME_ENDPOINT,
+			"/games",
 			HttpMethod.GET,
 			null,
 			new ParameterizedTypeReference<List<GameModel>>() {}
@@ -67,7 +65,7 @@ class GameIntegrationTests {
 
 		//when
 		ResponseEntity<List<GameModel>> response = restTemplate.exchange(
-			GAME_ENDPOINT,
+			"/games",
 			HttpMethod.GET,
 			null,
 			new ParameterizedTypeReference<List<GameModel>>() {}
@@ -93,7 +91,7 @@ class GameIntegrationTests {
 
 		//when
 		ResponseEntity<GameModel> response = restTemplate.exchange(
-			GAME_ENDPOINT, 
+			"/games", 
 			HttpMethod.POST,
 			body,
 			GameModel.class
@@ -114,7 +112,7 @@ class GameIntegrationTests {
 		
 		//when
 		ResponseEntity<String> response = restTemplate.exchange(
-			GAME_ENDPOINT,
+			"/games",
 			HttpMethod.POST,
 			body,
 			String.class
@@ -133,7 +131,7 @@ class GameIntegrationTests {
 
 		//when
 		ResponseEntity<String> response = restTemplate.exchange(
-			GAME_ENDPOINT,
+			"/games",
 			HttpMethod.POST,
 			body,
 			String.class
@@ -152,7 +150,7 @@ class GameIntegrationTests {
 
 		//when
 		ResponseEntity<String> response = restTemplate.exchange(
-			GAME_ENDPOINT,
+			"/games",
 			HttpMethod.POST,
 			body,
 			String.class
@@ -171,7 +169,7 @@ class GameIntegrationTests {
 
 		//when
 		ResponseEntity<String> response = restTemplate.exchange(
-			GAME_ENDPOINT,
+			"/games",
 			HttpMethod.POST,
 			body,
 			String.class

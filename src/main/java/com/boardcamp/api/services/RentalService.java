@@ -61,9 +61,10 @@ public class RentalService {
         return rentalRepository.save(rental);
     }
 
-    private int calculateDelayFee (LocalDate rentDate, int daysRented, int pricePerDay){
+    private int calculateDelayFee (LocalDate rentDate, int daysRented, int originalPrice){
         LocalDate currentDate = LocalDate.now();
-        Long periodRental = ChronoUnit.DAYS.between(rentDate, currentDate); 
+        Long periodRental = ChronoUnit.DAYS.between(rentDate, currentDate);
+        int pricePerDay = originalPrice / daysRented;
 
         if(periodRental <= daysRented){
             return 0;
@@ -75,7 +76,7 @@ public class RentalService {
     @SuppressWarnings("null")
     public RentalModel update (Long id){
         RentalModel rental = rentalRepository.findById(id).orElseThrow(
-            () -> new RentalNotFoundException("Rental not found by this gameId!")
+            () -> new RentalNotFoundException("Rental not found by this RentalId!")
         );
 
         if(rental.getReturnDate() != null){

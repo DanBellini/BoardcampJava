@@ -49,8 +49,6 @@ class RentalIntegrationTests {
         gameRepository.deleteAll();
     }
 
-    private final String RENTAL_ENDPOINT = "/rentals";
-
     @SuppressWarnings("null")
     @Test
 	void givenRepositoryIsEmpty_whenGetRequestFindAllRentals_thenReturnArrayEmpty() {
@@ -58,7 +56,7 @@ class RentalIntegrationTests {
 
 		//when
 		ResponseEntity<List<RentalModel>> response = restTemplate.exchange(
-			RENTAL_ENDPOINT,
+			"/rentals",
 			HttpMethod.GET,
 			null,
 			new ParameterizedTypeReference<List<RentalModel>>() {}
@@ -86,7 +84,7 @@ class RentalIntegrationTests {
 
         //when
         ResponseEntity<List<RentalModel>> response = restTemplate.exchange(
-            RENTAL_ENDPOINT,
+            "/rentals",
             HttpMethod.GET,
             null,
             new ParameterizedTypeReference<List<RentalModel>>() {}
@@ -115,7 +113,7 @@ class RentalIntegrationTests {
 
         //when
         ResponseEntity<RentalModel> response = restTemplate.exchange(
-            RENTAL_ENDPOINT,
+            "/rentals",
             HttpMethod.POST,
             body,
             RentalModel.class
@@ -138,7 +136,7 @@ class RentalIntegrationTests {
 
         //when
         ResponseEntity<String> response = restTemplate.exchange(
-            RENTAL_ENDPOINT,
+            "/rentals",
             HttpMethod.POST,
             body,
             String.class
@@ -164,7 +162,7 @@ class RentalIntegrationTests {
 
         //when
         ResponseEntity<String> response = restTemplate.exchange(
-            RENTAL_ENDPOINT,
+            "/rentals",
             HttpMethod.POST,
             body,
             String.class 
@@ -182,7 +180,7 @@ class RentalIntegrationTests {
 
         //when
         ResponseEntity<String> response = restTemplate.exchange(
-            RENTAL_ENDPOINT,
+            "/rentals",
             HttpMethod.POST,
             body,
             String.class
@@ -198,12 +196,12 @@ class RentalIntegrationTests {
     private GameModel createAndSaveGame (String name, String image, int stockTotal, int pricePerDay){
 		GameModel game = new GameModel(null, name, image, stockTotal, pricePerDay);
 		return gameRepository.save(game);
-	};
+	}
 
     private CustomerModel createAndSaveCustomer (String name, String cpf){
         CustomerModel customer = new CustomerModel(null, name, cpf);
         return customerRepository.save(customer);
-    };
+    }
 
     private RentalModel createAndSaveRental (int daysRented, CustomerModel customer, GameModel game){
         LocalDate rentDate = LocalDate.now();
