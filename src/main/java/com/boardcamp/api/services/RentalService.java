@@ -35,7 +35,7 @@ public class RentalService {
     }
 
     public List<RentalModel> findAll(){
-        return rentalRepository.findAll();
+        return rentalRepository.findAllOrderByIdDesc();
     }
 
     @SuppressWarnings("null")
@@ -48,7 +48,7 @@ public class RentalService {
             () -> new GameNotFoundException("Game not found by this gameId!")
         );
 
-        int rentedStock = rentalRepository.countByGame(game);
+        int rentedStock = rentalRepository.countByGameNotReturn(game.getId());
         int availableStock = game.getStockTotal();
 
         if(rentedStock >= availableStock){
@@ -84,7 +84,8 @@ public class RentalService {
 
         int delayFee = calculateDelayFee(rental.getRentDate(),rental.getDaysRented(), rental.getOriginalPrice());
 
-        rental.setDelayFee(delayFee);
-        return rentalRepository.save(rental);
+        RentalModel newRental = new RentalModel(rental, delayFee);
+        newRental.setId(id);
+        return rentalRepository.save(newRental);
     }
 }
